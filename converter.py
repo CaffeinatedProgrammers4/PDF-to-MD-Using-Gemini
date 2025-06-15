@@ -13,7 +13,7 @@ def extract_text_from_pdf(pdf_path):
 def pdf_to_md(pdf_path):
     content = extract_text_from_pdf(pdf_path)
 
-    model = genai.GenerativeModel("gemini-pro")
+    model = genai.GenerativeModel(model_name='gemini-1.5-pro-latest')
     response = model.generate_content(
         f"Convert the following text into well-formatted markdown:\n\n{content}"
     )
