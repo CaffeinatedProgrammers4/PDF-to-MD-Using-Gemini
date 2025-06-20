@@ -1,1 +1,123 @@
-Write reports for every commit in this directory
+
+PROJECT DURATION FROM 2nd JUNE TO 2nd JULY.
+
+TOPIC -- Converting the pdf files into markdown files using Gemini
+
+DATE - 03-06-25 
+I have done project setup.
+I have created two folders Input-files_pdfs and Input-files_converted-md. And in the folder Input-files_pdfs i have added three pdfs. 
+These pdf can be later converted in markdown file.
+
+DATE - 04-06-25
+I have installed some extra libraries like --
+1. PyMuPDF - It is used for reading and extracting text from pdf.
+2. python-dotenv - To load the API key from .env
+3. PyPDF2 - Used for PDF reading
+And list out all the libraries installed in the environment using pip list command.
+
+DATE - 05-06-25
+I have created a new file (.env) in root directory for storing API key
+.env = .env is a hidden environment file used to store sensitive information like API keys 
+(e.g., Gemini API key)
+Database credentials
+Secret tokens
+
+DATE - 06-06-25
+Created 2 more files inside Secret
+1. converter.py - extract text from pdf
+2. gemini_helper.py - to securely fetch api and logic to convert text into markdown
+and understand the concept of using these files.
+
+DATE - 08-06-25
+Created Gemini API and test it using genrativeai module.
+
+DATE - 09-06-25
+written the code in converter.py 
+I have import PyPDF2 library which is used to deal with pdf files. 
+It can perform task like read, extract text, merge, split, rotate pages, and perform other operations on PDF documents.
+It reads the pdf file from given folder and extract all the text from it. 
+
+DATE - 10-06-25
+Basic PDF Extraction in main.py - Added PDF reading and text extraction logic in main.py
+Wrote basic code in main.py to ---
+1. Load a single PDF (Ikigai.pdf) using PyPDF2.
+2. Extract text from all pages.
+3. Print the full extracted content to console.
+I have done this to verify that PDF reading and text extraction using PyPDF2 is working correctly.
+
+DATE - 11-06-25
+Modify the code by moving PDF extraction logic to converter.py
+
+I have created a new file converter.py
+Moved the extract_text_from_pdf(filename) function from main.py to converter.py.
+Updated main.py to import the function from converter.py.
+This is done to maintain cleaner, modular code and don't make it look messy.
+
+DATE - 12-06-25
+Implemented CLI File Selection using Inquirer.
+
+written the code that let user to select a file from the command line using inquirer library 
+This helps to create the interactive menu for selecting the file.
+Then modified main.py
+This shows all the pdf files and inquirer.checkbox allow user to select the pdf file among the list
+Then the text is extracted from the selected pdf file.
+
+DATE - 13-06-25
+Created Gemini API key and test it in CLI(Printit in cli).
+Now i am testing it in another file test.py 
+
+DATE - 14-06-25
+Gemini SDK integrated into project structure. 
+
+I have successfully integrated Google Gemini SDK into the project and installed python-dotenv to manage API keys securely.
+Loaded API key from .env file by using function --
+convert_text_to_markdown(text) this helps to convert extracted text into Markdown format
+This is done by using : model = genai.GenerativeModel("gemini-pro") 
+And then tested initial API call to ensure the integration is successful.
+
+DATE - 15-06-25
+Today, I focused on fixing the Gemini model integration issue.
+
+While testing the Gemini API, I found a 404 models/gemini-pro not found error, which indicated a problem with the model version that i have been using. 
+After diagnosing the error I found that the latest SDK requires fully qualified model names. 
+Then I updated the model initialization from genai.GenerativeModel("gemini-pro") to genai.GenerativeModel("models/gemini-1.5-pro-latest") which successfully resolved the issue. 
+After making this correction, the Gemini model was initialized properly, and the API calls started functioning without any errors.
+
+DATE - 16-06-25
+Today I faced Quota Exceeded Error while calling Gemini API.
+Today i tested Gemini API with the real PDF data.
+During multiple consecutive API calls i received: 
+"google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota"
+Then i researched and found that Gemini free-tier limits request count per day and per minute is exceeded.
+So I have to wait for 24 hours for free limits.
+
+DATE - 17-06-25
+Switched Gemini Model to Flash to handle quota limits
+Today I faced recurring quota limit errors (429 ResourceExhausted) while working with the default gemini-pro model. 
+After researching the Gemini model options I discovered that gemini-1.5-flash-latest is optimized for lighter and faster use-cases and comes with higher free-tier quotas. 
+To fix this, I modified the gemini_helper.py file and updated the model initialization line to:
+model = genai.GenerativeModel("models/gemini-1.5-flash-latest")
+
+DATE - 18-06-25
+Connected CLI file selection with Gemini Markdown Conversion
+
+Today, I successfully connected the CLI-based PDF file selector with the Gemini Markdown conversion feature. 
+After the user selects a PDF using the interactive Inquirer interface the extracted text from the PDF is then passed to the convert_text_to_markdown(). 
+This function uses the Gemini API to convert the raw text into well-formatted Markdown. 
+The returned Markdown output was shown directly to the terminal to check the Gemini's response. 
+This marks the first full pipeline integration — from PDF selection to Gemini-based Markdown generation.
+
+DATE - 19-06-25
+Saving Converted Markdown into Files
+
+Today, I implemented the logic to store the Markdown content into .md files. 
+After extracting text from the selected PDFs and converting it to Markdown using Gemini, I generated filenames by replacing the .pdf extension with .md. 
+I also added functionality to automatically create a directory named Converted_MD_Files/ using os.makedirs() (if it doesn’t already exist). 
+This ensures the converted markdown files are saved in an organized manner without needing manual folder creation. 
+
+DATE - 20-06-25
+Today, I fixed a problem in my code where it was trying to create the folder Converted_md everytime I ran the program, even if the folder was already there. 
+This was causing unnecessary folder creation.
+To solve this, I used a Python function
+This tells Python: "Create the folder only if it doesn’t already exist."
+After that the markdown files are saved properly in the same folder, without making duplicate folders.
