@@ -1,7 +1,7 @@
 import google.generativeai as genai
 import fitz  # PyMuPDF
 
-genai.configure(api_key="AIzaSyAELu2LUigg-GHaB-DhyUyVCFFxdP32nLg")
+genai.configure(api_key= "AIzaSyCsiRFp8iZoRw7_21smG3MKqd34sasSSos")
 
 def extract_text_from_pdf(pdf_path):
     text = ""
@@ -13,7 +13,8 @@ def extract_text_from_pdf(pdf_path):
 def pdf_to_md(pdf_path):
     content = extract_text_from_pdf(pdf_path)
 
-    model = genai.GenerativeModel(model_name='gemini-1.5-pro-latest')
+    model = genai.GenerativeModel("gemini-1.5-flash")
+
     response = model.generate_content(
         f"Convert the following text into well-formatted markdown:\n\n{content}"
     )
